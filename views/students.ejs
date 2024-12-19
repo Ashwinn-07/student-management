@@ -1,0 +1,134 @@
+<%- include('./partials/header.ejs') %>
+
+<div>
+  <div>
+    <h2 style="text-align: center; padding-top: 0.5em">
+      Student Management System
+    </h2>
+
+    <div
+      class="modal fade"
+      id="exampleModalToggle"
+      aria-hidden="true"
+      aria-labelledby="exampleModalToggleLabel"
+      tabindex="-1"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
+              Add Student
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form action="/addStudent" method="post">
+            <div class="modal-body">
+              <label for="name">Name :</label>
+              <input type="text" id="name" name="name" /><br /><br />
+              <label for="palce">Place :</label>
+              <input type="text" id="place" name="place" /><br /><br />
+              <label for="standard">Standard :</label>
+              <input type="text" id="standard" name="standard" /><br /><br />
+              <label for="medium">Medium :</label>
+              <input type="text" id="meduim" name="medium" />
+            </div>
+            <div class="modal-footer">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                data-bs-target="#exampleModalToggle2"
+                data-bs-toggle="modal"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="padding-bottom: 1em; padding-top: 2em">
+      <center>
+        <button
+          class="btn btn-dark"
+          data-bs-target="#exampleModalToggle"
+          data-bs-toggle="modal"
+        >
+          Add Student
+        </button>
+      </center>
+    </div>
+
+    <!-- <p style="color: black;"><%= StudentData %></p> -->
+    <div class="container">
+      <form action="/search" method="get">
+        <label for="search">Search :</label
+        ><input
+          id="search"
+          type="search"
+          name="str"
+          style="border-radius: 10px; margin-left: 0.5em"
+          oninput="this.value = this.value.toUpperCase()"
+        />
+      </form>
+      <div
+        class="card"
+        style="
+          border-radius: 20px;
+          background-color: #212529;
+          width: 100%;
+          margin-top: 1em;
+        "
+      >
+        <table class="table table-dark" style="margin-top: 2em">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Name</th>
+              <th scope="col">Place</th>
+              <th scope="col">Standard</th>
+              <th scope="col">Medium</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if(StudentData && StudentData.length > 0){ %> <%
+            StudentData.forEach((val,index)=>{ %>
+            <tr>
+              <td><%= ++index %></td>
+              <td><%= val.name %></td>
+              <td><%= val.place %></td>
+              <td><%= val.standard %></td>
+              <td><%= val.medium %></td>
+              <td>
+                <button
+                  class="btn btn-primary"
+                  onclick="window.location.href = '/editStudent?_id=<%=val._id%>'"
+                >
+                  Edit
+                </button>
+                <button
+                  class="btn btn-danger"
+                  onclick="window.location.href = '/deleteStudent?_id=<%=val._id%>'"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <% }) %> <% }else{ %>
+            <tr>
+              <td><p style="color: white">No students are found</p></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/footer.ejs') %>

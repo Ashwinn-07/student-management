@@ -1,0 +1,39 @@
+<%- include('./partials/header.ejs') %>
+
+<div>
+  <form action="/editStudent" method="post">
+    <input type="hidden" value="<%= studentData._id %>" name="_id" />
+    <label for="name">Name :</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      value="<%= studentData.name %>"
+    /><br /><br />
+    <label for="palce">Place :</label>
+    <input
+      type="text"
+      id="place"
+      name="place"
+      value="<%= studentData.place %>"
+    /><br /><br />
+    <label for="standard">Standard :</label>
+    <input
+      type="text"
+      id="standard"
+      name="standard"
+      value="<%= studentData.standard %>"
+    /><br /><br />
+    <label for="medium">Medium :</label>
+    <input
+      type="text"
+      id="meduim"
+      name="medium"
+      value="<%= studentData.medium %>"
+    />
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<%- include('./partials/footer.ejs') %>
