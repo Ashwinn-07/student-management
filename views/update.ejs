@@ -1,39 +1,121 @@
-<%- include('./partials/header.ejs') %>
-
-<div>
-  <form action="/editStudent" method="post">
-    <input type="hidden" value="<%= studentData._id %>" name="_id" />
-    <label for="name">Name :</label>
-    <input
-      type="text"
-      id="name"
-      name="name"
-      value="<%= studentData.name %>"
-    /><br /><br />
-    <label for="palce">Place :</label>
-    <input
-      type="text"
-      id="place"
-      name="place"
-      value="<%= studentData.place %>"
-    /><br /><br />
-    <label for="standard">Standard :</label>
-    <input
-      type="text"
-      id="standard"
-      name="standard"
-      value="<%= studentData.standard %>"
-    /><br /><br />
-    <label for="medium">Medium :</label>
-    <input
-      type="text"
-      id="meduim"
-      name="medium"
-      value="<%= studentData.medium %>"
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Student - StudentMS</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
     />
+    <style>
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      .nav-link {
+        color: white;
+        transition: opacity 0.2s;
+      }
+      .nav-link:hover {
+        color: white;
+        opacity: 0.8;
+      }
+      .form-control:focus {
+        background-color: transparent;
+        border-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+    </style>
+  </head>
+  <body class="gradient-bg min-vh-100">
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg glass-effect">
+      <div class="container">
+        <a class="navbar-brand text-white fw-bold" href="/">
+          <i class="fas fa-graduation-cap me-2"></i>
+          StudentMS
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-</div>
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="glass-effect rounded-3 p-4">
+            <h2 class="text-white text-center mb-4">Edit Student Details</h2>
+            <form action="/editStudent" method="post">
+              <input type="hidden" value="<%= studentData._id %>" name="_id" />
 
-<%- include('./partials/footer.ejs') %>
+              <div class="mb-3">
+                <label class="form-label text-white">Name</label>
+                <input
+                  type="text"
+                  class="form-control bg-transparent text-white"
+                  name="name"
+                  value="<%= studentData.name %>"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label text-white">Place</label>
+                <input
+                  type="text"
+                  class="form-control bg-transparent text-white"
+                  name="place"
+                  value="<%= studentData.place %>"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label text-white">Standard</label>
+                <input
+                  type="text"
+                  class="form-control bg-transparent text-white"
+                  name="standard"
+                  value="<%= studentData.standard %>"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label text-white">Medium</label>
+                <input
+                  type="text"
+                  class="form-control bg-transparent text-white"
+                  name="medium"
+                  value="<%= studentData.medium %>"
+                  required
+                />
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn btn-light px-4 py-2">
+                  Update Student
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+  </body>
+</html>
