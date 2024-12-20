@@ -10,5 +10,6 @@ router.post("/addStudent", ctrl.addStudent);
 router.get("/deleteStudent", ctrl.deleteStudent);
 router.get("/editStudent", ctrl.getEditStudent);
 router.post("/editStudent", ctrl.editStudent);
+router.get("/search", ctrl.search);
 
 export default router;

@@ -65,4 +65,13 @@ export class controllers {
       console.error(error);
     }
   }
+  async search(req: Request, res: Response): Promise<void> {
+    try {
+      const searchData = req.query.str;
+      const StudentData = await student.find({ name: { $regex: searchData } });
+      res.render("students", { StudentData });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
