@@ -67,9 +67,11 @@ export class controllers {
   }
   async search(req: Request, res: Response): Promise<void> {
     try {
-      const searchData = req.query.str;
-      const StudentData = await student.find({ name: { $regex: searchData } });
-      res.render("students", { StudentData });
+      const searchData = req.query.str as string;
+      const StudentData = await student.find({
+        name: { $regex: searchData, $options: "i" },
+      });
+      res.json(StudentData);
     } catch (error) {
       console.error(error);
     }

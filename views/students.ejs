@@ -146,6 +146,7 @@
       <div class="row justify-content-center mb-4">
         <div class="col-md-6">
           <form
+            id="searchForm"
             action="/search"
             method="get"
             class="glass-effect rounded-pill p-2 d-flex align-items-center"
@@ -153,10 +154,11 @@
             <i class="fas fa-search ms-3" style="color: var(--text-color)"></i>
             <input
               type="search"
+              id="searchInput"
               name="str"
               class="form-control border-0 bg-transparent"
               placeholder="Search students..."
-              oninput="this.value = this.value"
+              oninput="liveSearch()"
               style="box-shadow: none"
             />
           </form>
@@ -304,5 +306,65 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $("#searchInput").on("input", function (event) {
+          event.preventDefault();
+          liveSearch();
+        });
+
+        $("#searchForm").on("submit", function (event) {
+          event.preventDefault();
+          liveSearch();
+        });
+      });
+
+      function liveSearch() {
+        const query = $("#searchInput").val();
+        $.ajax({
+          url: "/search",
+          method: "GET",
+          data: { str: query },
+          success: function (data) {
+            const tbody = $("table tbody");
+            tbody.empty(); // Clear existing table rows
+            if (data.length > 0) {
+              data.forEach((student, index) => {
+                tbody.append(`
+              <tr class="hover-scale border-bottom" style="border-color: var(--border-color) !important">
+                <td>${index + 1}</td>
+                <td>${student.name}</td>
+                <td>${student.place}</td>
+                <td>${student.standard}</td>
+                <td>${student.medium}</td>
+                <td class="text-end">
+                  <button class="btn btn-sm btn-light me-2" onclick="window.location.href = '/editStudent?_id=${
+                    student._id
+                  }'">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="btn btn-sm btn-danger" onclick="window.location.href = '/deleteStudent?_id=${
+                    student._id
+                  }'">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            `);
+              });
+            } else {
+              tbody.append(
+                '<tr><td colspan="6" class="text-center py-4">No students found</td></tr>'
+              );
+            }
+          },
+          error: function () {
+            console.error("Error fetching search results");
+          },
+        });
+      }
+    </script>
   </body>
 </html>
