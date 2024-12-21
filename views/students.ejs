@@ -279,7 +279,6 @@
     </div>
 
     <script>
-      // Theme Management
       document.addEventListener("DOMContentLoaded", function () {
         const themeToggle = document.getElementById("themeToggle");
         const themeIcon = document.getElementById("themeIcon");
@@ -329,7 +328,7 @@
           data: { str: query },
           success: function (data) {
             const tbody = $("table tbody");
-            tbody.empty(); // Clear existing table rows
+            tbody.empty();
             if (data.length > 0) {
               data.forEach((student, index) => {
                 tbody.append(`
