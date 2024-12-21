@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,34 +9,106 @@
       rel="stylesheet"
     />
     <style>
+      html[data-theme="dark"] {
+        --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --glass-bg: rgba(255, 255, 255, 0.1);
+        --text-color: #ffffff;
+        --input-bg: rgba(255, 255, 255, 0.1);
+        --modal-bg: #212529;
+        --border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      html[data-theme="light"] {
+        --bg-gradient: linear-gradient(135deg, #f6f9fc 0%, #e9ecef 100%);
+        --glass-bg: rgba(255, 255, 255, 0.9);
+        --text-color: #212529;
+        --input-bg: rgba(255, 255, 255, 0.9);
+        --modal-bg: #ffffff;
+        --border-color: rgba(0, 0, 0, 0.1);
+      }
+
       .glass-effect {
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--glass-bg);
         backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid var(--border-color);
       }
+
       .gradient-bg {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: var(--bg-gradient);
       }
+
       .hover-scale {
         transition: transform 0.2s;
       }
+
       .hover-scale:hover {
         transform: scale(1.02);
       }
+
       .nav-link {
-        color: white;
+        color: var(--text-color);
         transition: opacity 0.2s;
       }
+
       .nav-link:hover {
-        color: white;
+        color: var(--text-color);
         opacity: 0.8;
+      }
+
+      .theme-switcher {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      .theme-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 2px solid var(--border-color);
+        background: var(--glass-bg);
+        color: var(--text-color);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .theme-btn:hover {
+        transform: scale(1.1);
+      }
+
+      .table {
+        color: var(--text-color) !important;
+      }
+
+      .modal-content {
+        background: var(--modal-bg);
+        color: var(--text-color);
+      }
+
+      .form-control {
+        background-color: var(--input-bg) !important;
+        color: var(--text-color) !important;
+        border-color: var(--border-color);
+      }
+
+      .form-control:focus {
+        background-color: var(--input-bg);
+        border-color: var(--border-color);
+        color: var(--text-color);
+        box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+      }
+
+      .form-control::placeholder {
+        color: var(--text-color);
+        opacity: 0.7;
       }
     </style>
   </head>
   <body class="gradient-bg min-vh-100">
     <nav class="navbar navbar-expand-lg glass-effect">
       <div class="container">
-        <a class="navbar-brand text-white fw-bold" href="/">
+        <a class="navbar-brand" style="color: var(--text-color)" href="/">
           <i class="fas fa-graduation-cap me-2"></i>
           StudentMS
         </a>
@@ -51,9 +123,15 @@
       </div>
     </nav>
 
+    <div class="theme-switcher">
+      <button class="theme-btn" id="themeToggle">
+        <i class="fas fa-sun" id="themeIcon"></i>
+      </button>
+    </div>
+
     <div class="container py-5">
       <div class="text-center mb-5">
-        <h1 class="display-4 text-white fw-bold mb-4">
+        <h1 class="display-4" style="color: var(--text-color)">
           Student Management System
         </h1>
         <button
@@ -72,11 +150,11 @@
             method="get"
             class="glass-effect rounded-pill p-2 d-flex align-items-center"
           >
-            <i class="fas fa-search text-white ms-3"></i>
+            <i class="fas fa-search ms-3" style="color: var(--text-color)"></i>
             <input
               type="search"
               name="str"
-              class="form-control border-0 bg-transparent text-white ms-2"
+              class="form-control border-0 bg-transparent"
               placeholder="Search students..."
               oninput="this.value = this.value"
               style="box-shadow: none"
@@ -87,9 +165,12 @@
 
       <div class="glass-effect rounded-3 p-4">
         <div class="table-responsive">
-          <table class="table table-borderless text-white mb-0">
+          <table class="table table-borderless mb-0">
             <thead>
-              <tr class="border-bottom border-white border-opacity-25">
+              <tr
+                class="border-bottom"
+                style="border-color: var(--border-color) !important"
+              >
                 <th>No</th>
                 <th>Name</th>
                 <th>Place</th>
@@ -102,7 +183,8 @@
               <% if(StudentData && StudentData.length > 0){ %> <%
               StudentData.forEach((val,index)=>{ %>
               <tr
-                class="hover-scale border-bottom border-white border-opacity-10"
+                class="hover-scale border-bottom"
+                style="border-color: var(--border-color) !important"
               >
                 <td><%= ++index %></td>
                 <td><%= val.name %></td>
@@ -144,41 +226,32 @@
       tabindex="-1"
     >
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-dark text-white">
-          <div class="modal-header border-bottom border-secondary">
+        <div class="modal-content">
+          <div class="modal-header" style="border-color: var(--border-color)">
             <h5 class="modal-title">Add New Student</h5>
             <button
               type="button"
-              class="btn-close btn-close-white"
+              class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              style="filter: invert(var(--text-invert))"
             ></button>
           </div>
           <form action="/addStudent" method="post">
             <div class="modal-body">
               <div class="mb-3">
                 <label class="form-label">Name</label>
-                <input
-                  type="text"
-                  class="form-control bg-secondary text-white"
-                  name="name"
-                  required
-                />
+                <input type="text" class="form-control" name="name" required />
               </div>
               <div class="mb-3">
                 <label class="form-label">Place</label>
-                <input
-                  type="text"
-                  class="form-control bg-secondary text-white"
-                  name="place"
-                  required
-                />
+                <input type="text" class="form-control" name="place" required />
               </div>
               <div class="mb-3">
                 <label class="form-label">Standard</label>
                 <input
                   type="text"
-                  class="form-control bg-secondary text-white"
+                  class="form-control"
                   name="standard"
                   required
                 />
@@ -187,13 +260,13 @@
                 <label class="form-label">Medium</label>
                 <input
                   type="text"
-                  class="form-control bg-secondary text-white"
+                  class="form-control"
                   name="medium"
                   required
                 />
               </div>
             </div>
-            <div class="modal-footer border-top border-secondary">
+            <div class="modal-footer" style="border-color: var(--border-color)">
               <button type="submit" class="btn btn-primary px-4">
                 Add Student
               </button>
@@ -202,6 +275,32 @@
         </div>
       </div>
     </div>
+
+    <script>
+      // Theme Management
+      document.addEventListener("DOMContentLoaded", function () {
+        const themeToggle = document.getElementById("themeToggle");
+        const themeIcon = document.getElementById("themeIcon");
+
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggle.addEventListener("click", () => {
+          const currentTheme =
+            document.documentElement.getAttribute("data-theme");
+          const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+          document.documentElement.setAttribute("data-theme", newTheme);
+          localStorage.setItem("theme", newTheme);
+          updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+          themeIcon.className = theme === "dark" ? "fas fa-sun" : "fas fa-moon";
+        }
+      });
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
